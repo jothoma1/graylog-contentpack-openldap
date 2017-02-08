@@ -132,3 +132,18 @@ then
     remove_field("data");
 end
 ```
+
+## Stage 2
+Rule: OpenLDAP extraction PPolicy
+```
+rule "OpenLDAP extraction PPolicy"
+when
+    has_field("ppolicy_data") && $message.ppolicy_op=="bind"
+then
+    let pattern = "(?:(?:Entry %{DATA:ppolicy_bind_dn} has an expired password: %{INT:ppolicy_grace} grace logins)|(?:Setting warning for password expiry for %{DATA:ppolicy_bind_dn} = %{INT:ppolicy_expiration} seconds))%{SPACE}$";
+    let message_text = to_string($message.ppolicy_data);
+    let matches = grok(pattern: pattern, value: message_text);
+    set_fields(matches);
+    remove_field("ppolicy_data");
+end
+```
