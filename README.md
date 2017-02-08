@@ -6,9 +6,9 @@ Based on the great work here: https://github.com/ltb-project/openldap-elk
 This is based on [Processing Pipeline](http://docs.graylog.org/en/latest/pages/pipelines.html)
 # Usage
 Basically, it's quite simple, just 3 steps: 
-1) Create a new Pipeline
-2) Create all the rules below
-3) Connect the Pipeline to your stream (mine is based on application_name="slapd"
+* 1) Create a new Pipeline
+* 2) Create all the rules below and add them to the 3 stages
+* 3) Connect the Pipeline to your stream (mine is based on application_name="slapd"
 
 ## Stage 0
 -> Rule source:
