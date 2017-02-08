@@ -105,3 +105,30 @@ then
     remove_field("data");
 end
 ```
+
+Rule: OpenLDAP extraction CMP
+```
+rule "OpenLDAP extraction CMP"
+when
+    has_field("operation_name") && $message.operation_name=="CMP"
+then
+    let pattern = "dn=\"%{DATA:cmp_dn}\" attr=\"%{DATA:cmp_attr}\"%{SPACE}$";
+    let message_text = to_string($message.data);
+    let matches = grok(pattern: pattern, value: message_text);
+    set_fields(matches);
+    remove_field("data");
+end
+```
+Rule: OpenLDAP extraction EXT
+```
+rule "OpenLDAP extraction EXT"
+when
+    has_field("operation_name") && $message.operation_name=="EXT"
+then
+    let pattern = "oid=%{DATA:ext_oid}%{SPACE}$";
+    let message_text = to_string($message.data);
+    let matches = grok(pattern: pattern, value: message_text);
+    set_fields(matches);
+    remove_field("data");
+end
+```
